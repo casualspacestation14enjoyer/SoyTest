@@ -4099,7 +4099,7 @@
 /area/ship/storage)
 "yx" = (
 /obj/structure/table/reinforced,
-/obj/machinery/computer/secure_data/laptop,
+/obj/machinery/computer/records/sec/laptop,
 /turf/open/floor/plasteel/dark,
 /area/ship/security)
 "yz" = (
