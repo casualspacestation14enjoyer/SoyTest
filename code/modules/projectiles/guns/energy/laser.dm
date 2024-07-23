@@ -16,7 +16,7 @@
 	spread_unwielded = 10
 
 /obj/item/gun/energy/laser/empty_cell
-	dead_cell = TRUE
+	spawn_empty_mag = TRUE
 
 /obj/item/gun/energy/laser/practice
 	name = "practice laser gun"
@@ -97,7 +97,7 @@
 	item_state = "laser"
 	w_class = WEIGHT_CLASS_BULKY
 	mag_size = MAG_SIZE_LARGE
-	cell_type = "/obj/item/stock_parts/cell/gun/large"
+	default_ammo_type = /obj/item/stock_parts/cell/gun/large
 	force = 10
 	flags_1 =  CONDUCT_1
 	slot_flags = ITEM_SLOT_BACK
@@ -109,7 +109,7 @@
 	projectile_type = /obj/projectile/beam/laser/accelerator
 	select_name = "accelerator"
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'
-	e_cost = 5000
+	rounds_per_shot = 5000
 
 /obj/projectile/beam/laser/accelerator
 	name = "accelerator laser"
@@ -202,10 +202,10 @@
 	icon_state = "hitscangun"
 	item_state = "gun"
 	ammo_x_offset = 2
-	charge_sections = 4
+	ammo_overlay_sections = 4
 	mag_size = MAG_SIZE_SMALL
 	w_class = WEIGHT_CLASS_NORMAL
-	cell_type = /obj/item/stock_parts/cell/gun/mini
+	default_ammo_type = /obj/item/stock_parts/cell/gun/mini
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/hitscan)
 	manufacturer = MANUFACTURER_SHARPLITE_NEW
 
@@ -246,7 +246,7 @@
 	item_state = "e50"
 
 	mag_size = MAG_SIZE_LARGE
-	cell_type = /obj/item/stock_parts/cell/gun/large
+	default_ammo_type = /obj/item/stock_parts/cell/gun/large
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/eoehoma/e50)
 	weapon_weight = WEAPON_HEAVY
 	manufacturer = MANUFACTURER_EOEHOMA
@@ -257,7 +257,7 @@
 
 	shaded_charge = FALSE
 	ammo_x_offset = 4
-	charge_sections = 2
+	ammo_overlay_sections = 2
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = 0
 

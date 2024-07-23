@@ -24,13 +24,13 @@
 	ammo_x_offset = 3
 	ammo_y_offset = 3
 	modifystate = FALSE
-	charge_sections = 1
+	ammo_overlay_sections = 1
 	weapon_weight = WEAPON_HEAVY
 	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/beam_rifle/hitscan)
-	internal_cell = FALSE //prevents you from giving it an OP cell - WS Edit //shut up dumb nerd
+	internal_magazine = FALSE //prevents you from giving it an OP cell - WS Edit //shut up dumb nerd
 	mag_size = MAG_SIZE_LARGE
-	cell_type = "/obj/item/stock_parts/cell/gun/large"
+	default_ammo_type = /obj/item/stock_parts/cell/gun/large
 	canMouseDown = TRUE
 	var/aiming = FALSE
 	var/aiming_time = 12
@@ -78,7 +78,7 @@
 
 /obj/item/gun/energy/beam_rifle/debug
 	delay = 0
-	cell_type = /obj/item/stock_parts/cell/infinite
+	default_ammo_type = /obj/item/stock_parts/cell/infinite
 	aiming_time = 0
 	recoil = 0
 
@@ -402,7 +402,7 @@
 /obj/item/ammo_casing/energy/beam_rifle/hitscan
 	projectile_type = /obj/projectile/beam/beam_rifle/hitscan
 	select_name = "beam"
-	e_cost = 10000
+	rounds_per_shot = 10000
 	fire_sound = 'sound/weapons/beam_sniper.ogg'
 
 /obj/projectile/beam/beam_rifle

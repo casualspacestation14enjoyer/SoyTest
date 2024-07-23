@@ -22,7 +22,7 @@
 	. = ..()
 	gun = new(src)
 	battery = new(src)
-	gun.cell = battery
+	gun.installed_cell = battery
 	START_PROCESSING(SSobj, src)
 
 /obj/item/minigunpack/Destroy()
@@ -116,7 +116,7 @@
 	custom_materials = null
 	weapon_weight = WEAPON_MEDIUM
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/minigun)
-	cell_type = /obj/item/stock_parts/cell/crap
+	default_ammo_type = /obj/item/stock_parts/cell/crap
 	item_flags = NEEDS_PERMIT | SLOWS_WHILE_IN_HAND
 	can_charge = FALSE
 	var/obj/item/minigunpack/ammo_pack
@@ -153,7 +153,7 @@
 	ammo_pack.overheat += burst_size
 	if(ammo_pack.battery)
 		var/totransfer = min(100, ammo_pack.battery.charge)
-		var/transferred = cell.give(totransfer)
+		var/transferred = installed_cell.give(totransfer)
 		ammo_pack.battery.use(transferred)
 
 /obj/item/gun/energy/minigun/afterattack(atom/target, mob/living/user, flag, params)

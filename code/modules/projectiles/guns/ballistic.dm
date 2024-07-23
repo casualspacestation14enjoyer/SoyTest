@@ -1,6 +1,6 @@
 #define EMPTY_GUN_HELPER(gun_type)				\
 	/obj/item/gun/ballistic/##gun_type/no_mag {	\
-		spawnwithmagazine = FALSE;				\
+		default_ammo_type = null;				\
 	}
 
 ///Subtype for any kind of ballistic gun
@@ -12,6 +12,8 @@
 
 	has_safety = TRUE
 	safety = TRUE
+
+	min_recoil = 0.25
 
 	valid_attachments = list(
 		/obj/item/attachment/silencer,
@@ -34,18 +36,18 @@
 		)
 	)
 
-/obj/item/gun/ballistic/Initialize()
-	. = ..()
-	if (!spawnwithmagazine && !ispath(mag_type, /obj/item/ammo_box/magazine/internal))
+/obj/item/gun/ballistic/fill_gun()
+	if (!default_ammo_type && !ispath(default_ammo_type, /obj/item/ammo_box/magazine/internal))
 		bolt_locked = TRUE
 		update_appearance()
 		return
 	if (!magazine)
-		magazine = new mag_type(src)
-	if (!spawnwithmagazine)
-		get_ammo_list (drop_all = TRUE)
+		magazine = new default_ammo_type(src)
+	if (!default_ammo_type)
+		get_ammo_list(drop_all = TRUE)
 	chamber_round()
 	update_appearance()
+
 /obj/item/gun/ballistic/update_icon_state()
 	if(current_skin)
 		icon_state = "[unique_reskin[current_skin]][sawn_off ? "_sawn" : ""]"
@@ -67,17 +69,7 @@
 		else
 			. += "[icon_state]_mag"
 			var/capacity_number = 0
-			switch(get_ammo() / magazine.max_ammo)
-				if(0.2 to 0.39)
-					capacity_number = 20
-				if(0.4 to 0.59)
-					capacity_number = 40
-				if(0.6 to 0.79)
-					capacity_number = 60
-				if(0.8 to 0.99)
-					capacity_number = 80
-				if(1.0)
-					capacity_number = 100
+			capacity_number = ROUND_UP((get_ammo_count() / get_max_ammo()) * ammo_overlay_sections)
 			if (capacity_number)
 				. += "[icon_state]_mag_[capacity_number]"
 	if(!chambered && empty_indicator)
@@ -138,7 +130,7 @@
 
 ///Handles all the logic needed for magazine insertion
 /obj/item/gun/ballistic/proc/insert_magazine(mob/user, obj/item/ammo_box/magazine/inserted_mag, display_message = TRUE)
-	if(!istype(inserted_mag, mag_type))
+	if(!istype(inserted_mag, default_ammo_type))
 		to_chat(user, "<span class='warning'>\The [inserted_mag] doesn't seem to fit into \the [src]...</span>")
 		return FALSE
 	if(user.transferItemToLoc(inserted_mag, src))
@@ -228,7 +220,7 @@
 
 ///Prefire empty checks for the bolt drop
 /obj/item/gun/ballistic/proc/prefire_empty_checks()
-	if (!chambered && !get_ammo())
+	if (!chambered && !get_ammo_count())
 		if (bolt_type == BOLT_TYPE_OPEN && !bolt_locked)
 			bolt_locked = TRUE
 			playsound(src, bolt_drop_sound, bolt_drop_sound_volume)
@@ -236,7 +228,7 @@
 
 ///postfire empty checks for bolt locking and sound alarms
 /obj/item/gun/ballistic/proc/postfire_empty_checks(last_shot_succeeded)
-	if (!chambered && !get_ammo())
+	if (!chambered && !get_ammo_count())
 		if (empty_alarm && last_shot_succeeded)
 			playsound(src, empty_alarm_sound, empty_alarm_volume, empty_alarm_vary)
 			update_appearance()
@@ -294,21 +286,34 @@
 /obj/item/gun/ballistic/examine(mob/user)
 	. = ..()
 	var/count_chambered = !(bolt_type == BOLT_TYPE_NO_BOLT || bolt_type == BOLT_TYPE_OPEN)
-	. += "It has [get_ammo(count_chambered)] round\s remaining."
+	. += "It has [get_ammo_count(count_chambered)] round\s remaining."
 	if (!chambered)
 		. += "It does not seem to have a round chambered."
 	if (bolt_locked)
 		. += "The [bolt_wording] is locked back and needs to be released before firing."
 	. += "You can [bolt_wording] [src] by pressing the <b>unqiue action</b> key. By default, this is <b>space</b>"
 
+/*
+/obj/item/gun/ballistic/adjust_current_rounds(obj/item/mag, new_rounds)
+	var/obj/item/ammo_box/magazine/magazine = mag
+	magazine?.current_rounds += new_rounds
+*/
+
 ///Gets the number of bullets in the gun
-/obj/item/gun/ballistic/proc/get_ammo(countchambered = TRUE)
-	var/boolets = 0 //mature var names for mature people
+/obj/item/gun/ballistic/get_ammo_count(countchambered = TRUE)
+	var/rounds = 0
 	if (chambered && countchambered)
-		boolets++
+		rounds++
 	if (magazine)
-		boolets += magazine.ammo_count()
-	return boolets
+		rounds += magazine?.ammo_count()
+	return rounds
+
+/obj/item/gun/ballistic/get_max_ammo(countchamber = TRUE)
+	var/rounds = 0
+	rounds = magazine?.max_ammo
+	if(countchamber)
+		rounds += 1
+	return rounds
 
 ///gets a list of every bullet in the gun
 /obj/item/gun/ballistic/proc/get_ammo_list(countchambered = TRUE, drop_all = FALSE)

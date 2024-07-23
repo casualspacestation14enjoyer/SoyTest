@@ -19,25 +19,8 @@
 	eject_sound = 'sound/weapons/gun/smg/smg_unload.ogg'
 	eject_empty_sound = 'sound/weapons/gun/smg/smg_unload.ogg'
 
-/obj/item/gun/ballistic/automatic/smg/calculate_recoil(mob/user, recoil_bonus = 0)
-	var/gunslinger_bonus = 2
-	var/total_recoil
-	if(.)
-		total_recoil += .
-	if(HAS_TRAIT(user, TRAIT_GUNSLINGER)) //gunslinger penalty
-		total_recoil += gunslinger_bonus
-	. = total_recoil
-	return ..()
-
-/obj/item/gun/ballistic/automatic/smg/calculate_spread(mob/user, bonus_spread)
-	var/gunslinger_bonus = 16
-	var/total_spread = bonus_spread
-	if(.)
-		total_spread += .
-	if(HAS_TRAIT(user, TRAIT_GUNSLINGER)) //gunslinger penalty
-		total_spread += gunslinger_bonus
-	. = total_spread
-	return ..()
+	gunslinger_recoil_bonus = 2
+	gunslinger_spread_bonus = 16
 
 /obj/item/gun/ballistic/automatic/smg/c20r
 	name = "\improper C-20r SMG"
@@ -49,7 +32,7 @@
 	icon_state = "c20r"
 	item_state = "c20r"
 
-	mag_type = /obj/item/ammo_box/magazine/smgm45
+	default_ammo_type = /obj/item/ammo_box/magazine/smgm45
 	show_magazine_on_sprite = TRUE
 	show_magazine_on_sprite_ammo = TRUE
 	empty_indicator = TRUE
@@ -67,8 +50,7 @@ EMPTY_GUN_HELPER(automatic/smg/c20r)
 	icon_state = "cobra20"
 	item_state = "cobra20"
 
-/obj/item/gun/ballistic/automatic/smg/c20r/cobra/no_mag
-	spawnwithmagazine = FALSE
+EMPTY_GUN_HELPER(automatic/smg/c20r/cobra)
 
 /obj/item/gun/ballistic/automatic/smg/c20r/suns
 	desc = "A bullpup .45 SMG designated 'C-20r.' Its buttstamp reads 'Scarborough Arms - Per falcis, per pravitas.' This one is painted in SUNS' colors."
@@ -84,7 +66,7 @@ EMPTY_GUN_HELPER(automatic/smg/c20r)
 	mob_overlay_icon = 'icons/obj/guns/manufacturer/nanotrasen_sharplite/onmob.dmi'
 	icon_state = "wt550"
 	item_state = "arg"
-	mag_type = /obj/item/ammo_box/magazine/wt550m9
+	default_ammo_type = /obj/item/ammo_box/magazine/wt550m9
 	actions_types = list()
 	show_magazine_on_sprite = TRUE
 	show_magazine_on_sprite_ammo = TRUE
@@ -93,7 +75,7 @@ EMPTY_GUN_HELPER(automatic/smg/c20r)
 	fire_sound = 'sound/weapons/gun/smg/smg_heavy.ogg'
 
 /obj/item/gun/ballistic/automatic/smg/wt550/no_mag
-	spawnwithmagazine = FALSE
+	default_ammo_type = null
 
 /obj/item/gun/ballistic/automatic/smg/mini_uzi
 	name = "\improper Type U3 Uzi"
@@ -105,7 +87,7 @@ EMPTY_GUN_HELPER(automatic/smg/c20r)
 	mob_overlay_icon = 'icons/obj/guns/manufacturer/frontier_import/onmob.dmi'
 	icon_state = "uzi"
 
-	mag_type = /obj/item/ammo_box/magazine/uzim9mm
+	default_ammo_type = /obj/item/ammo_box/magazine/uzim9mm
 	bolt_type = BOLT_TYPE_OPEN
 	show_magazine_on_sprite = TRUE
 
@@ -132,7 +114,7 @@ EMPTY_GUN_HELPER(automatic/smg/c20r)
 	mob_overlay_icon = 'icons/obj/guns/manufacturer/nanotrasen_sharplite/onmob.dmi'
 	icon_state = "vector"
 	item_state = "vector"
-	mag_type = /obj/item/ammo_box/magazine/smgm9mm //you guys remember when the autorifle was chambered in 9mm
+	default_ammo_type = /obj/item/ammo_box/magazine/smgm9mm //you guys remember when the autorifle was chambered in 9mm
 	bolt_type = BOLT_TYPE_LOCKING
 	show_magazine_on_sprite = TRUE
 	weapon_weight = WEAPON_LIGHT
@@ -148,7 +130,7 @@ EMPTY_GUN_HELPER(automatic/smg/c20r)
 	icon_state = "m90"
 	item_state = "m90"
 
-	mag_type = /obj/item/ammo_box/magazine/m556
+	default_ammo_type = /obj/item/ammo_box/magazine/m556
 	gun_firenames = list(FIREMODE_SEMIAUTO = "single", FIREMODE_BURST = "burst fire", FIREMODE_FULLAUTO = "full auto", FIREMODE_OTHER = "underbarrel grenade launcher")
 	gun_firemodes = list(FIREMODE_SEMIAUTO, FIREMODE_BURST, FIREMODE_OTHER)
 	default_firemode = FIREMODE_SEMIAUTO
@@ -230,7 +212,7 @@ EMPTY_GUN_HELPER(automatic/smg/c20r)
 
 	icon_state = "firestorm"
 	item_state = "firestorm"
-	mag_type = /obj/item/ammo_box/magazine/c45_firestorm_mag
+	default_ammo_type = /obj/item/ammo_box/magazine/c45_firestorm_mag
 	unique_mag_sprites_for_variants = TRUE
 	burst_size = 1
 	actions_types = list()
@@ -244,7 +226,7 @@ EMPTY_GUN_HELPER(automatic/smg/c20r)
 	wield_slowdown = 0.4
 
 /obj/item/gun/ballistic/automatic/smg/firestorm/pan //spawns with pan magazine, can take sticks instead of just drums, not sure where this would be used, maybe erts?
-	spawnwithmagazine = FALSE
+	default_ammo_type = null
 
 /obj/item/gun/ballistic/automatic/smg/firestorm/pan/Initialize()
 	. = ..()
@@ -262,7 +244,7 @@ EMPTY_GUN_HELPER(automatic/smg/c20r)
 	icon_state = "cm5"
 	item_state = "cm5"
 
-	mag_type = /obj/item/ammo_box/magazine/smgm9mm
+	default_ammo_type = /obj/item/ammo_box/magazine/smgm9mm
 	weapon_weight = WEAPON_LIGHT
 	fire_sound = 'sound/weapons/gun/smg/smg_heavy.ogg'
 	manufacturer = MANUFACTURER_MINUTEMAN
@@ -305,7 +287,7 @@ EMPTY_GUN_HELPER(automatic/smg/cm5)
 
 	weapon_weight = WEAPON_MEDIUM
 	w_class = WEIGHT_CLASS_NORMAL
-	mag_type = /obj/item/ammo_box/magazine/skm_545_39
+	default_ammo_type = /obj/item/ammo_box/magazine/skm_545_39
 
 	recoil = 2
 	recoil_unwielded = 6
@@ -356,7 +338,7 @@ EMPTY_GUN_HELPER(automatic/smg/cm5)
 	icon_state = "skm_inteqsmg"
 	item_state = "skm_inteqsmg"
 
-	mag_type = /obj/item/ammo_box/magazine/smgm10mm
+	default_ammo_type = /obj/item/ammo_box/magazine/smgm10mm
 	manufacturer = MANUFACTURER_INTEQ
 
 	fire_sound = 'sound/weapons/gun/smg/vector_fire.ogg'
@@ -389,7 +371,7 @@ EMPTY_GUN_HELPER(automatic/smg/cm5)
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "saber"
 	item_state = "gun"
-	mag_type = /obj/item/ammo_box/magazine/smgm9mm
+	default_ammo_type = /obj/item/ammo_box/magazine/smgm9mm
 	bolt_type = BOLT_TYPE_LOCKING
 	show_magazine_on_sprite = TRUE
 	manufacturer = MANUFACTURER_NANOTRASEN_OLD

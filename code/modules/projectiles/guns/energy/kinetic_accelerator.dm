@@ -4,12 +4,12 @@
 	icon_state = "kineticgun"
 	item_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
-	cell_type = /obj/item/stock_parts/cell/emproof
+	default_ammo_type = /obj/item/stock_parts/cell/emproof
 	item_flags = NONE
 	obj_flags = UNIQUE_RENAME
 	weapon_weight = WEAPON_LIGHT
 	automatic_charge_overlays = FALSE
-	internal_cell = TRUE //prevents you from giving it an OP cell - WS Edit
+	internal_magazine = TRUE //prevents you from giving it an OP cell - WS Edit
 	custom_price = 750
 	w_class = WEIGHT_CLASS_BULKY
 
@@ -130,12 +130,12 @@
 		empty()
 
 /obj/item/gun/energy/kinetic_accelerator/proc/empty()
-	if(cell)
-		cell.use(cell.charge)
+	if(installed_cell)
+		installed_cell.use(installed_cell.charge)
 	update_appearance()
 
 /obj/item/gun/energy/kinetic_accelerator/proc/attempt_reload(recharge_time)
-	if(!cell)
+	if(!installed_cell)
 		return
 	if(overheat)
 		return
@@ -160,7 +160,7 @@
 	return
 
 /obj/item/gun/energy/kinetic_accelerator/proc/reload()
-	cell.give(cell.maxcharge)
+	installed_cell.give(installed_cell.maxcharge)
 	if(!suppressed)
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, TRUE)
 	else
@@ -177,7 +177,7 @@
 /obj/item/ammo_casing/energy/kinetic
 	projectile_type = /obj/projectile/kinetic
 	select_name = "kinetic"
-	e_cost = 500
+	rounds_per_shot = 500
 	fire_sound = 'sound/weapons/kenetic_accel.ogg' // fine spelling there chap
 
 /obj/item/ammo_casing/energy/kinetic/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")

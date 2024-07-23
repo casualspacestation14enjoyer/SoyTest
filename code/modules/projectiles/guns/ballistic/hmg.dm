@@ -18,6 +18,9 @@
 	recoil_unwielded = 4
 	wield_slowdown = 3
 
+	gunslinger_recoil_bonus = 2
+	gunslinger_spread_bonus = 20
+
 	///does this have a bipod?
 	var/has_bipod = FALSE
 	///is the bipod deployed?
@@ -116,29 +119,6 @@
 	. = ..()
 	retract_bipod(user=user)
 
-/obj/item/gun/ballistic/automatic/hmg/calculate_recoil(mob/user, recoil_bonus = 0)
-	var/gunslinger_bonus = 2
-	var/total_recoil = recoil_bonus
-
-	if(bipod_deployed)
-		total_recoil += deploy_recoil_bonus
-	if(HAS_TRAIT(user, TRAIT_GUNSLINGER)) //gunslinger penalty
-		total_recoil += gunslinger_bonus
-
-	return ..(user, total_recoil)
-
-/obj/item/gun/ballistic/automatic/hmg/calculate_spread(mob/user, bonus_spread)
-	var/gunslinger_bonus = 20
-	var/total_spread = bonus_spread
-
-	if(bipod_deployed)
-		total_spread += deploy_spread_bonus
-	if(HAS_TRAIT(user, TRAIT_GUNSLINGER)) //gunslinger penalty
-		total_spread += gunslinger_bonus
-
-	return ..(user, total_spread)
-
-
 /obj/item/gun/ballistic/automatic/hmg/update_icon_state()
 	. = ..()
 	item_state = "[initial(item_state)][bipod_deployed ? "_deployed" : ""]"
@@ -162,7 +142,7 @@
 	item_state = "l6closedmag"
 	base_icon_state = "l6"
 
-	mag_type = /obj/item/ammo_box/magazine/mm712x82
+	default_ammo_type = /obj/item/ammo_box/magazine/mm712x82
 	spread = 7
 
 	fire_delay = 0.1 SECONDS
@@ -212,7 +192,7 @@
 	..()
 
 /obj/item/gun/ballistic/automatic/hmg/l6_saw/attackby(obj/item/A, mob/user, params)
-	if(!cover_open && istype(A, mag_type))
+	if(!cover_open && istype(A, default_ammo_type))
 		to_chat(user, "<span class='warning'>[src]'s dust cover prevents a magazine from being fit.</span>")
 		return
 	..()
@@ -228,7 +208,7 @@
 	icon_state = "solar"
 
 	fire_sound = 'sound/weapons/gun/l6/shot.ogg'
-	mag_type = /obj/item/ammo_box/magazine/rifle47x33mm
+	default_ammo_type = /obj/item/ammo_box/magazine/rifle47x33mm
 	spread = 7
 
 	fire_delay = 0.1 SECONDS
@@ -267,7 +247,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	manufacturer = MANUFACTURER_IMPORT
-	mag_type = /obj/item/ammo_box/magazine/skm_762_40
+	default_ammo_type = /obj/item/ammo_box/magazine/skm_762_40
 
 	fire_delay = 0.13 SECONDS
 
@@ -287,7 +267,7 @@
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/gun/ballistic/automatic/hmg/skm_lmg/extended //spawns with the proper extended magazine, for erts
-	spawnwithmagazine = FALSE
+	default_ammo_type = null
 
 /obj/item/gun/ballistic/automatic/hmg/skm_lmg/extended/Initialize()
 	. = ..()
@@ -295,7 +275,7 @@
 	chamber_round()
 
 /obj/item/gun/ballistic/automatic/hmg/skm_lmg/drum_mag //spawns with a drum, maybe not for erts but admin enhanced ERTS? when things really go to shit
-	spawnwithmagazine = FALSE
+	default_ammo_type = null
 
 /obj/item/gun/ballistic/automatic/hmg/skm_lmg/drum_mag/Initialize()
 	. = ..()

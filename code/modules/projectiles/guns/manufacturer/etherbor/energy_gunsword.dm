@@ -16,7 +16,7 @@
 	wield_delay = 0.7 SECONDS
 	wield_slowdown = 0.35
 
-	cell_type = /obj/item/stock_parts/cell/gun/kalix
+	default_ammo_type = /obj/item/stock_parts/cell/gun/kalix
 	ammo_type = list(/obj/item/ammo_casing/energy/kalix, /obj/item/ammo_casing/energy/disabler/hitscan)
 
 	load_sound = 'sound/weapons/gun/gauss/pistol_reload.ogg'
@@ -26,7 +26,7 @@
 /obj/item/ammo_casing/energy/kalix
 	projectile_type = /obj/projectile/beam/hitscan/kalix
 	fire_sound = 'sound/weapons/gun/energy/kalixsmg.ogg'
-	e_cost = 666 //30 shots per cell
+	rounds_per_shot = 666 //30 shots per cell
 	delay = 1
 
 /obj/projectile/beam/hitscan/kalix
@@ -43,7 +43,7 @@
 	armour_penetration = -10
 
 /obj/item/gun/energy/kalix/empty_cell
-	dead_cell = TRUE
+	spawn_empty_mag = TRUE
 
 /obj/item/gun/energy/kalix/pgf
 	name = "Etherbor BG-16"
@@ -52,7 +52,7 @@
 	item_state = "pgfgun"
 	w_class = WEIGHT_CLASS_NORMAL
 
-	cell_type = /obj/item/stock_parts/cell/gun/pgf
+	default_ammo_type = /obj/item/stock_parts/cell/gun/pgf
 	ammo_type = list(/obj/item/ammo_casing/energy/pgf , /obj/item/ammo_casing/energy/disabler/hitscan)
 
 /obj/projectile/beam/hitscan/kalix/pgf
@@ -83,7 +83,7 @@
 	spread = 2
 	spread_unwielded = 5
 
-	cell_type = /obj/item/stock_parts/cell/gun/kalix
+	default_ammo_type = /obj/item/stock_parts/cell/gun/kalix
 	ammo_type = list(/obj/item/ammo_casing/energy/kalix/pistol)
 
 
@@ -91,11 +91,11 @@
 
 /obj/item/ammo_casing/energy/kalix/pistol
 	fire_sound = 'sound/weapons/gun/energy/kalixpistol.ogg'
-	e_cost = 1250 //10 shots per cell
+	rounds_per_shot = 1250 //10 shots per cell
 	delay = 0
 
 /obj/item/gun/energy/kalix/pistol/empty_cell
-	dead_cell = TRUE
+	spawn_empty_mag = TRUE
 
 /obj/item/gun/energy/kalix/pgf/heavy
 	name = "Etherbor HBG-7"
@@ -124,7 +124,7 @@
 	select_name  = "AR"
 	projectile_type = /obj/projectile/beam/hitscan/kalix/pgf/assault
 	fire_sound = 'sound/weapons/gun/energy/kalixrifle.ogg'
-	e_cost = 1000 //20 shots per cell
+	rounds_per_shot = 1000 //20 shots per cell
 	delay = 1
 
 /obj/projectile/beam/hitscan/kalix/pgf/assault
@@ -140,7 +140,7 @@
 	select_name  = "DMR"
 	projectile_type = /obj/projectile/beam/hitscan/kalix/pgf/sniper
 	fire_sound = 'sound/weapons/gun/laser/heavy_laser.ogg'
-	e_cost = 2000 //20 shots per cell
+	rounds_per_shot = 2000 //20 shots per cell
 	delay = 6
 
 /obj/projectile/beam/hitscan/kalix/pgf/sniper

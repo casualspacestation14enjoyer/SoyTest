@@ -224,7 +224,7 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 		TrueGun = G
 		if(istype(G, /obj/item/gun/ballistic))
 			Pewgun = G
-			var/obj/item/ammo_box/magazine/M = Pewgun.mag_type
+			var/obj/item/ammo_box/magazine/M = Pewgun.default_ammo_type
 			casingtype = initial(M.ammo_type)
 		if(istype(G, /obj/item/gun/energy))
 			Zapgun = G
@@ -234,10 +234,10 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 
 /mob/living/simple_animal/hostile/mimic/copy/ranged/OpenFire(the_target)
 	if(Zapgun)
-		if(Zapgun.cell)
+		if(Zapgun.installed_cell)
 			var/obj/item/ammo_casing/energy/shot = Zapgun.ammo_type[Zapgun.select]
-			if(Zapgun.cell.charge >= shot.e_cost)
-				Zapgun.cell.use(shot.e_cost)
+			if(Zapgun.installed_cell.charge >= shot.rounds_per_shot)
+				Zapgun.installed_cell.use(shot.rounds_per_shot)
 				Zapgun.update_appearance()
 				..()
 	else if(Pewgun)

@@ -17,7 +17,7 @@
 	return
 
 /obj/item/gun/energy/ionrifle/empty_cell
-	dead_cell = TRUE
+	spawn_empty_mag = TRUE
 
 /obj/item/gun/energy/ionrifle/carbine
 	name = "ion carbine"
@@ -38,7 +38,7 @@
 /obj/item/gun/energy/decloner/update_overlays()
 	. = ..()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	if(!QDELETED(cell) && (cell.charge > shot.e_cost))
+	if(!QDELETED(installed_cell) && (installed_cell.charge > shot.rounds_per_shot))
 		. += "decloner_spin"
 
 /obj/item/gun/energy/floragun
@@ -59,7 +59,7 @@
 	item_state = "c20r"
 	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/meteor)
-	cell_type = /obj/item/stock_parts/cell/potato
+	default_ammo_type = /obj/item/stock_parts/cell/potato
 	selfcharge = 1
 
 /obj/item/gun/energy/meteorgun/pen
@@ -124,7 +124,7 @@
 	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg')
 	tool_behaviour = TOOL_WELDER
 	toolspeed = 0.7 //plasmacutters can be used as welders, and are faster than standard welders
-	internal_cell = TRUE //so you don't cheese through the need for plasma - WS EDIT
+	internal_magazine = TRUE //so you don't cheese through the need for plasma - WS EDIT
 	var/charge_weld = 25 //amount of charge used up to start action (multiplied by amount) and per progress_flash_divisor ticks of welding
 
 /obj/item/gun/energy/plasmacutter/ComponentInitialize()
@@ -135,8 +135,8 @@
 
 /obj/item/gun/energy/plasmacutter/examine(mob/user)
 	. = ..()
-	if(cell)
-		. += "<span class='notice'>[src] is [round(cell.percent())]% charged.</span>"
+	if(installed_cell)
+		. += "<span class='notice'>[src] is [round(installed_cell.percent())]% charged.</span>"
 
 /obj/item/gun/energy/plasmacutter/attackby(obj/item/I, mob/user)
 	var/charge_multiplier = 0 //2 = Refined stack, 1 = Ore
@@ -145,11 +145,11 @@
 	if(istype(I, /obj/item/stack/ore/plasma))
 		charge_multiplier = 1
 	if(charge_multiplier)
-		if(cell.charge == cell.maxcharge)
+		if(installed_cell.charge == installed_cell.maxcharge)
 			to_chat(user, "<span class='notice'>You try to insert [I] into [src], but it's fully charged.</span>") //my cell is round and full
 			return
 		I.use(1)
-		cell.give(500*charge_multiplier)
+		installed_cell.give(500*charge_multiplier)
 		to_chat(user, "<span class='notice'>You insert [I] in [src], recharging it.</span>")
 	else
 		..()
@@ -157,20 +157,20 @@
 // Can we weld? Plasma cutter does not use charge continuously.
 // Amount cannot be defaulted to 1: most of the code specifies 0 in the call.
 /obj/item/gun/energy/plasmacutter/tool_use_check(mob/living/user, amount)
-	if(QDELETED(cell))
+	if(QDELETED(installed_cell))
 		to_chat(user, "<span class='warning'>[src] does not have a cell, and cannot be used!</span>")
 		return FALSE
 	// Amount cannot be used if drain is made continuous, e.g. amount = 5, charge_weld = 25
 	// Then it'll drain 125 at first and 25 periodically, but fail if charge dips below 125 even though it still can finish action
 	// Alternately it'll need to drain amount*charge_weld every period, which is either obscene or makes it free for other uses
-	if(amount ? cell.charge < charge_weld * amount : cell.charge < charge_weld)
+	if(amount ? installed_cell.charge < charge_weld * amount : installed_cell.charge < charge_weld)
 		to_chat(user, "<span class='warning'>You need more charge to complete this task!</span>")
 		return FALSE
 
 	return TRUE
 
 /obj/item/gun/energy/plasmacutter/use(amount)
-	return (!QDELETED(cell) && cell.use(amount ? amount * charge_weld : charge_weld))
+	return (!QDELETED(installed_cell) && installed_cell.use(amount ? amount * charge_weld : charge_weld))
 
 /obj/item/gun/energy/plasmacutter/use_tool(atom/target, mob/living/user, delay, amount=1, volume=0, datum/callback/extra_checks)
 	if(amount)
@@ -263,7 +263,7 @@
 	desc = "A modified energy weapon re-designed to fire 3D-printed flechettes, pulled directly from the cyborg's internal power source."
 	icon_state = "l6_cyborg"
 	icon = 'icons/obj/guns/projectile.dmi'
-	cell_type = /obj/item/stock_parts/cell/secborg
+	default_ammo_type = /obj/item/stock_parts/cell/secborg
 	ammo_type = list(/obj/item/ammo_casing/energy/c3dbullet)
 	can_charge = FALSE
 	use_cyborg_cell = TRUE
@@ -321,7 +321,7 @@
 	icon_state = "freezegun"
 	desc = "A gun that changes temperatures."
 	ammo_type = list(/obj/item/ammo_casing/energy/temp, /obj/item/ammo_casing/energy/temp/hot)
-	cell_type = /obj/item/stock_parts/cell/gun/upgraded
+	default_ammo_type = /obj/item/stock_parts/cell/gun/upgraded
 	ammo_x_offset = 2
 
 /obj/item/gun/energy/temperature/security
@@ -335,7 +335,7 @@
 	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit."
 	ammo_type = list(/obj/item/ammo_casing/energy/instakill)
 	force = 60
-	charge_sections = 5
+	ammo_overlay_sections = 5
 	ammo_x_offset = 2
 	shaded_charge = FALSE
 

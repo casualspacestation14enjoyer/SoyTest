@@ -873,12 +873,11 @@
 	righthand_file = GUN_RIGHTHAND_ICON
 	icon_state = "spur"
 	item_state = "spur"
-	selfcharge = 1
+	selfcharge = TRUE
 	charge_delay = 1
 	slot_flags = ITEM_SLOT_BELT
 	fire_delay = 0.1 SECONDS
 	recoil = 1
-	cell_type = /obj/item/stock_parts/cell/gun
 	ammo_type = list(/obj/item/ammo_casing/energy/spur)
 	supports_variations = VOX_VARIATION
 	var/chargesound
@@ -888,14 +887,14 @@
 	. += "<span class='notice'>This weapon contains a gradual heat accelerator that increases shot power as the weapon's energy stores are depleted. Shots at low power are significantly stronger, but also have incredibly short range.</span>"
 
 /obj/item/gun/energy/spur/update_appearance()
-	if(!cell)
+	if(!installed_cell)
 		chargesound = null
 		recoil = 1
 		fire_sound = 'sound/weapons/spur_high.ogg'
 		return
 
-	var/maxcharge = cell.maxcharge
-	var/charge = cell.charge
+	var/maxcharge = installed_cell.maxcharge
+	var/charge = installed_cell.charge
 
 	var/oldsound = chargesound
 	var/obj/item/ammo_casing/energy/AC = ammo_type[select]
@@ -907,7 +906,7 @@
 		chargesound = 'sound/weapons/spur_chargemed.ogg'
 		recoil = 0
 		fire_sound = 'sound/weapons/spur_medium.ogg'
-	else if(charge >= AC.e_cost) // less than that
+	else if(charge >= AC.rounds_per_shot) // less than that
 		chargesound = 'sound/weapons/spur_chargehigh.ogg'
 		recoil = 0
 		fire_sound = 'sound/weapons/spur_high.ogg'
@@ -924,7 +923,7 @@
 /obj/item/ammo_casing/energy/spur
 	projectile_type = /obj/projectile/bullet/spur
 	select_name = "polar star lens"
-	e_cost = 1300
+	rounds_per_shot = 1300
 	fire_sound = null
 	harmful = TRUE
 
@@ -942,8 +941,8 @@
 		return ..()
 
 	var/obj/item/gun/energy/spur/fired_gun = fired_from
-	var/maxcharge = fired_gun.cell.maxcharge
-	var/charge = fired_gun.cell.charge
+	var/maxcharge = fired_gun.installed_cell.maxcharge
+	var/charge = fired_gun.installed_cell.charge
 
 	if(charge >= ((maxcharge/3) * 2)) // 2 third charged
 		icon_state = "spur_low"
@@ -1018,8 +1017,8 @@
 		return ..()
 
 	var/obj/item/gun/energy/spur/fired_gun = fired_from
-	var/maxcharge = fired_gun.cell.maxcharge
-	var/charge = fired_gun.cell.charge
+	var/maxcharge = fired_gun.installed_cell.maxcharge
+	var/charge = fired_gun.installed_cell.charge
 
 	if(charge >= ((maxcharge/3) * 2)) // 2 third charged
 		icon_state = "spur_high"
