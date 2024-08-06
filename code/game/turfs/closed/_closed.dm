@@ -46,7 +46,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 
 /turf/closed/indestructible/splashscreen
-	name = "Space Station 13"
+	name = "SoyWeb 13"
 	icon = 'icons/blank_title.png'
 	icon_state = ""
 	layer = SPLASHSCREEN_LAYER

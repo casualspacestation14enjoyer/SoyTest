@@ -14,7 +14,7 @@
 	"map_short_name": "Lagoon-class",
 	"map_path": "_maps/shuttles/independent/independent_lagoon.dmm",
 	"unique_ship_access": false,
-	"starting_funds": 3000,
+	"starting_funds": 4000,
 	"job_slots": {
 		"Captain": {
 			"outfit": "/datum/outfit/job/independent/captain",

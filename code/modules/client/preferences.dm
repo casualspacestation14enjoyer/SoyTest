@@ -144,8 +144,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						)
 	var/list/friendlyGenders = list(
 							"Male" = "male",
-							"Female" = "female",
-							"Other" = "plural"
+							"Female" = "female"
 						)
 	var/list/prosthetic_limbs = list(
 							BODY_ZONE_L_ARM = PROSTHETIC_NORMAL,

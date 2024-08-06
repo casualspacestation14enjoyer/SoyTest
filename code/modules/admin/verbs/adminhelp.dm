@@ -245,7 +245,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 //Removes the ahelp verb and returns it after 2 minutes
 /datum/admin_help/proc/timeout_verb()
-	remove_verb(initiator, /client/verb/adminhelp)
+	remove_verb(initiator, /client/proc/adminhelp)
 	initiator.adminhelptimerid = addtimer(CALLBACK(initiator, TYPE_PROC_REF(/client, giveadminhelpverb)), 1200, TIMER_STOPPABLE) //2 minute cooldown of admin helps
 
 //private
@@ -576,7 +576,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 //
 
 /client/proc/giveadminhelpverb()
-	add_verb(src, /client/verb/adminhelp)
+	add_verb(src, /client/proc/adminhelp)
 	deltimer(adminhelptimerid)
 	adminhelptimerid = 0
 
@@ -585,7 +585,13 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/msg = input(src, "Please describe your problem concisely and an admin will help as soon as they're able.", "Adminhelp contents") as message|null
 	adminhelp(msg)
 
-/client/verb/adminhelp(msg as message)
+/client/verb/adminhelpfake()
+	set category = "Admin"
+	set name = "Ahelp"
+
+	ooc("MY ANUS IS BLEEDING!!!")
+
+/client/proc/adminhelp(msg as message)
 	set category = "Admin"
 	set name = "Adminhelp"
 

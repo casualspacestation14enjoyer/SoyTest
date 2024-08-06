@@ -2,21 +2,21 @@ macro "default"
 
 
 menu "menu"
-	elem
+	elem 
 		name = "&File"
 		command = ""
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = "&Quick screenshot\tF2"
 		command = ".screenshot auto"
 		category = "&File"
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = "&Save screenshot as...\tShift+F2"
 		command = ".screenshot"
 		category = "&File"
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = ""
 		command = ""
 		category = "&File"
@@ -26,21 +26,21 @@ menu "menu"
 		command = ".reconnect"
 		category = "&File"
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = "&Quit\tAlt-F4"
 		command = ".quit"
 		category = "&File"
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = "&Help"
 		command = ""
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = "&Admin Help\tF1"
 		command = "adminhelp"
 		category = "&Help"
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = "&Hotkeys"
 		command = "hotkeys-help"
 		category = "&Help"
@@ -92,7 +92,6 @@ window "mainwindow"
 		saved-params = ""
 	elem "commandbar_spy"
 		type = BROWSER
-		is-default = false
 		pos = 0,0
 		size = 200x200
 		anchor1 = -1,-1
@@ -128,23 +127,52 @@ window "mapwindow"
 		pos = 0,464
 		size = 280x16
 		anchor1 = 0,100
-		is-visible = true
+		anchor2 = -1,-1
+		text-color = #ffffff
+		background-color = #222222
+		border = line
+		saved-params = ""
 		text = ""
 		align = left
-		background-color = #222222
-		text-color = #ffffff
-		border = line
 
 window "infowindow"
 	elem "infowindow"
 		type = MAIN
-		pos = 0,0
+		pos = 384,0
 		size = 640x480
 		anchor1 = -1,-1
 		anchor2 = -1,-1
 		background-color = #272727
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
+		outer-size = 658x549
+		outer-pos = 384,0
+		inner-pos = 9,38
+		screen-size = 1920x1020
+	elem "diskord"
+		type = BUTTON
+		pos = 416,4
+		size = 216x20
+		anchor1 = 29,0
+		anchor2 = 37,0
+		font-family = "Verdana"
+		text-color = #ffffff
+		background-color = #40628a
+		saved-params = "is-checked"
+		text = "Discord"
+		command = "discord"
+	elem "wiki"
+		type = BUTTON
+		pos = 280,4
+		size = 128x20
+		anchor1 = 29,0
+		anchor2 = 37,0
+		font-family = "Verdana"
+		text-color = #ffffff
+		background-color = #40628a
+		saved-params = "is-checked"
+		text = "Wiki"
+		command = "soyjakparty"
 	elem "info"
 		type = CHILD
 		pos = 0,30
@@ -156,103 +184,33 @@ window "infowindow"
 		left = "statwindow"
 		right = "outputwindow"
 		is-vert = false
-	elem "changelog"
+	elem "gallery"
 		type = BUTTON
 		pos = 8,5
-		size = 88x20
-		anchor1 = 1,0
-		anchor2 = 14,0
-		font-family = "Verdana"
-		text-color = #ffffff
-		background-color = #40628a
-		saved-params = "is-checked"
-		text = "Changes"
-		command = "changelog"
-	elem "rules"
-		type = BUTTON
-		pos = 104,5
-		size = 80x20
-		anchor1 = 15,0
-		anchor2 = 28,0
-		font-family = "Verdana"
-		text-color = #ffffff
-		background-color = #40628a
-		saved-params = "is-checked"
-		text = "Rules"
-		command = "rules"
-	elem "discord"
-		type = BUTTON
-		pos = 192,5
-		size = 80x20
+		size = 264x20
 		anchor1 = 29,0
 		anchor2 = 37,0
 		font-family = "Verdana"
 		text-color = #ffffff
 		background-color = #40628a
 		saved-params = "is-checked"
-		text = "Discord"
-		command = "discord"
-	elem "wiki"
-		type = BUTTON
-		pos = 280,5
-		size = 80x20
-		anchor1 = 38,0
-		anchor2 = 51,0
-		font-family = "Verdana"
-		text-color = #ffffff
-		background-color = #40628a
-		saved-params = "is-checked"
-		text = "Wiki"
-		command = "wiki"
-	elem "lore"
-		type = BUTTON
-		pos = 368,5
-		size = 80x20
-		anchor1 = 52,0
-		anchor2 = 65,0
-		font-family = "Verdana"
-		text-color = #ffffff
-		background-color = #40628a
-		saved-params = "is-checked"
-		text = "Lore"
-		command = "lore"
-	elem "github"
-		type = BUTTON
-		pos = 456,5
-		size = 80x20
-		anchor1 = 66,0
-		anchor2 = 79,0
-		font-family = "Verdana"
-		text-color = #ffffff
-		background-color = #40628a
-		saved-params = "is-checked"
-		text = "Github"
-		command = "github"
-	elem "report-issue"
-		type = BUTTON
-		pos = 544,5
-		size = 80x20
-		anchor1 = 80,0
-		anchor2 = 93,0
-		font-family = "Verdana"
-		font-size = 8
-		text-color = #ffffff
-		background-color = #40628a
-		saved-params = "is-checked"
-		text = "Report Issue"
-		command = "report-issue"
+		text = "Gallery"
+		command = "soybooru"
 
 window "outputwindow"
 	elem "outputwindow"
 		type = MAIN
-		pos = 0,0
+		pos = 384,0
 		size = 640x480
 		anchor1 = -1,-1
 		anchor2 = -1,-1
+		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
-		outer-size = 656x538
-		inner-size = 640x499
+		outer-size = 658x549
+		outer-pos = 384,0
+		inner-pos = 9,38
+		screen-size = 1920x1020
 	elem "input"
 		type = INPUT
 		pos = 2,460
@@ -268,6 +226,7 @@ window "outputwindow"
 		size = 40x19
 		anchor1 = 100,100
 		anchor2 = -1,-1
+		background-color = none
 		saved-params = "is-checked"
 		text = "Chat"
 		command = ".winset \"saybutton.is-checked=true ? input.command=\"!say \\\"\" : input.command=\"\"saybutton.is-checked=true ? mebutton.is-checked=false\"\"saybutton.is-checked=true ? oocbutton.is-checked=false\""
@@ -278,6 +237,7 @@ window "outputwindow"
 		size = 40x19
 		anchor1 = 100,100
 		anchor2 = -1,-1
+		background-color = none
 		saved-params = "is-checked"
 		text = "OOC"
 		command = ".winset \"oocbutton.is-checked=true ? input.command=\"!ooc \\\"\" : input.command=\"\"oocbutton.is-checked=true ? mebutton.is-checked=false\"\"oocbutton.is-checked=true ? saybutton.is-checked=false\""
@@ -288,6 +248,7 @@ window "outputwindow"
 		size = 40x19
 		anchor1 = 100,100
 		anchor2 = -1,-1
+		background-color = none
 		saved-params = "is-checked"
 		text = "Me"
 		command = ".winset \"mebutton.is-checked=true ? input.command=\"!me \\\"\" : input.command=\"\"mebutton.is-checked=true ? saybutton.is-checked=false\"\"mebutton.is-checked=true ? oocbutton.is-checked=false\""
@@ -367,9 +328,4 @@ window "statwindow"
 		anchor2 = 100,100
 		is-visible = false
 		saved-params = ""
-		tab-text-color = #ffffff
-		tab-background-color = #272727
-		tab-font-family = "Verdana"
-		prefix-color = #ebebeb
-		suffix-color = #ebebeb
 

@@ -197,18 +197,12 @@
 	return pick(GLOB.skin_tones)
 
 GLOBAL_LIST_INIT(skin_tones, sortList(list(
-	"albino",
 	"caucasian1",
 	"caucasian2",
 	"caucasian3",
-	"latino",
 	"mediterranean",
 	"asian1",
-	"asian2",
-	"arab",
-	"indian",
-	"african1",
-	"african2"
+	"asian2"
 	)))
 
 /proc/pick_species_adjective(mob/living/carbon/human/H)

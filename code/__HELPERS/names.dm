@@ -39,16 +39,13 @@ GLOBAL_VAR(command_name)
 
 /proc/station_name()
 	if(!GLOB.station_name)
-		var/newname
+		var/newname = "SoyWeb 13"
 		var/config_station_name = CONFIG_GET(string/stationname)
 		if(config_station_name)
 			newname = config_station_name
-		else
-			newname = new_station_name()
 
 		set_station_name(newname)
-
-	return GLOB.station_name
+	return "SoyWeb 13"
 
 /proc/set_station_name(newname)
 	GLOB.station_name = newname
