@@ -1,7 +1,7 @@
 // Sourced from https://www.fantasynamegenerators.com/scripts/spiderfolkNames.js?r
 // piss off all the spider players with this one neat trick
-// node spidernames.js > ../../strings/names/spider-first.txt
-// node spidernames.js > ../../strings/names/spider-last.txt
+// node spidernames.js > ../../string/names/spider-first.txt
+// node spidernames.js > ../../string/names/spider-last.txt
 //jshint esversion: 6
 const nm1 = [
 	"",

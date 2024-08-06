@@ -1,4 +1,4 @@
 #!/bin/bash
 
-node spidernames.js > ../../strings/names/spider_first.txt
-node spidernames.js > ../../strings/names/spider_last.txt
+node spidernames.js > ../../string/names/spider_first.txt
+node spidernames.js > ../../string/names/spider_last.txt

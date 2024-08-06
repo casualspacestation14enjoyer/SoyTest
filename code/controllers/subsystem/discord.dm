@@ -53,7 +53,7 @@ SUBSYSTEM_DEF(discord)
 	var/enabled = 0
 
 /datum/controller/subsystem/discord/Initialize(start_timeofday)
-	common_words = world.file2list("strings/1000_most_common.txt")
+	common_words = world.file2list("string/1000_most_common.txt")
 	reverify_cache = list()
 	// Check for if we are using TGS, otherwise return and disables firing
 	if(world.TgsAvailable())

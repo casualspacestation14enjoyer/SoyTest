@@ -1,5 +1,5 @@
-GLOBAL_LIST_INIT(spider_first, world.file2list("strings/names/spider_first.txt"))
-GLOBAL_LIST_INIT(spider_last, world.file2list("strings/names/spider_last.txt"))
+GLOBAL_LIST_INIT(spider_first, world.file2list("string/names/spider_first.txt"))
+GLOBAL_LIST_INIT(spider_last, world.file2list("string/names/spider_last.txt"))
 
 /obj/item/organ/eyes/night_vision/spider
 	name = "spider eyes"
