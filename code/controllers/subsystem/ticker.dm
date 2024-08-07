@@ -575,8 +575,7 @@ SUBSYSTEM_DEF(ticker)
 		'sound/roundend/undecided.ogg',
 		'sound/roundend/repair.ogg',
 		'sound/roundend/boowomp.ogg',
-		'sound/roundend/shiptestingthursday.ogg',
-		'sound/roundend/gayrights.ogg'\
+		'sound/roundend/shiptestingthursday.ogg'\
 		)
 	///The reference to the end of round sound that we have chosen.
 	var/sound/end_of_round_sound_ref = sound(round_end_sound)
